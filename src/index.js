@@ -1,2 +1,1 @@
-import "./module"
-console.log("Index")
+import './scss/main.scss'
