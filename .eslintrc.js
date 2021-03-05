@@ -15,6 +15,12 @@ module.exports = {
 		'arrow-parens': 'off',
 		'padded-blocks': 'off',
 		'eol-last': 'off',
-		'no-tabs': 'off'
+		'require-jsdoc': 'off',
+		'object-curly-spacing': 'off',
+		'no-tabs': 'off',
+		'operator-linebreak': 'off',
+		'no-debugger': 'off',
+		'max-len': 'off',
+		'no-trailing-spaces': 'off'
 	},
 };
