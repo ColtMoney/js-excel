@@ -1,4 +1,5 @@
 import {range} from '@core/utils'
+import { COLS_COUNT, ROWS_COUNT } from './table.config';
 
 export function shouldResize(event) {
    return event.target.dataset.resize
@@ -19,4 +20,17 @@ export function matrix($target, $current) {
       return acc
    }, [])
    
+}
+
+export function nextSelector(key, {row, col}) {
+    if (key === 'ArrowDown' || key === 'Enter') {
+        ROWS_COUNT > row + 1 ? row++ : row
+    } else if (key === 'ArrowUp') {
+        row - 1 >= 0 ? row-- : row
+    } else if (key === 'ArrowLeft') {
+        col - 1 >= 0 ? col-- : col
+    } else if (key === 'ArrowRight' || key === 'Tab') {
+        COLS_COUNT > col + 1 ? col++ : col
+    }
+    return `[data-id="${row}:${col}"]`
 }

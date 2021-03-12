@@ -1,7 +1,8 @@
 import { ExcelComponent } from '@core/ExcelComponent';
 import { createTable } from './table.tamplate';
 import { resizeHundler } from './table.resize';
-import { shouldResize, isCell, matrix } from './table.functions';
+import { ROWS_COUNT } from './table.config';
+import { shouldResize, isCell, matrix, nextSelector } from './table.functions';
 import { TableSelection } from './TableSelection';
 import { $ } from '@core/dom';
 
@@ -43,40 +44,15 @@ export class Table extends ExcelComponent {
 
     onKeydown(event) {
         const keyCode = event.code
-        if(keyCode === 'ArrowDown' || keyCode === 'ArrowUp' || keyCode === 'ArrowLeft' || keyCode === 'ArrowRight' || keyCode === 'Tab' || keyCode === 'Enter') {
-            const row = this.selection.selected.parseId().row
-            const col = this.selection.selected.parseId().col
-            if(keyCode === 'ArrowDown' && row+1 < 20) {  
-                const $el = this.$root.find(`[data-id="${row+1}:${col}"]`)
-                this.selection.select($el)
-            } else if(keyCode === 'ArrowUp' && row-1 >= 0) {  
-                const $el = this.$root.find(`[data-id="${row-1}:${col}"]`)
-                this.selection.select($el)
-            } else if(keyCode === 'ArrowLeft' && col-1 >= 0) {
-                const $el = this.$root.find(`[data-id="${row}:${col-1}"]`)
-                this.selection.select($el)
-            } else if(keyCode === 'ArrowRight' && col+1 < 20) {
-                const $el = this.$root.find(`[data-id="${row}:${col+1}"]`)
-                this.selection.select($el)
-            } else if(keyCode === 'Tab') {
-                event.preventDefault()
-                let id = `${row}:${col+1}`
-                console.log(id)
-                if(col === 25) {
-                    id = `${row+1}:${0}`
-                }
-                const $el = this.$root.find(`[data-id="${id}"]`)
-                this.selection.select($el)
-            } else if(keyCode === 'Enter' && row+1 < 20) {
-                event.preventDefault()
-                const $el = this.$root.find(`[data-id="${row+1}:${col}"]`)
-                this.selection.select($el)
-            }
-             
+        const keys = ['ArrowDown', 'ArrowUp', 'ArrowLeft', 'ArrowRight', 'Tab', 'Enter']
+        if (keys.includes(keyCode)) {
+            event.preventDefault()
+            const id = this.selection.selected.parseId()
+            this.selection.select(this.$root.find(nextSelector(keyCode, id)))
         }  
     }
 
     toHTML() {
-        return createTable(20)
+        return createTable(ROWS_COUNT)
     }
 }
