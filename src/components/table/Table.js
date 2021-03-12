@@ -6,7 +6,7 @@ import { TableSelection } from './TableSelection';
 import { $ } from '@core/dom';
 
 export class Table extends ExcelComponent {
-    static className = 'excel__table'
+    static className = 'excel__table' 
 
     constructor($root) {
         super($root, {
